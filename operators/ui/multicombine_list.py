@@ -7,7 +7,7 @@ from bpy.props import *
 
 class MultiCombineImageAdd(bpy.types.Operator):
     bl_idname = 'smc.img_add'
-    bl_label = 'Add Item'
+    bl_label = bpy.app.translations.pgettext('Add Item')
 
     def execute(self, context: bpy.types.Context) -> Set[str]:
         scn = context.scene
@@ -22,7 +22,7 @@ class MultiCombineImageAdd(bpy.types.Operator):
 
 class MultiCombineImageRemove(bpy.types.Operator):
     bl_idname = 'smc.img_remove'
-    bl_label = 'Remove Item'
+    bl_label = bpy.app.translations.pgettext('Remove Item')
 
     def execute(self, context: bpy.types.Context) -> Set[str]:
         scn = context.scene
@@ -36,7 +36,7 @@ class MultiCombineImageRemove(bpy.types.Operator):
 
 class MultiCombineImageMove(bpy.types.Operator):
     bl_idname = 'smc.img_move'
-    bl_label = "Move Item"
+    bl_label = bpy.app.translations.pgettext('Move Item')
 
     type = bpy.props.StringProperty(default='UP')
 
@@ -56,8 +56,8 @@ class MultiCombineImageMove(bpy.types.Operator):
 
 class MultiCombineImageReset(bpy.types.Operator):
     bl_idname = 'smc.img_reset'
-    bl_label = 'Reset Item'
-    bl_description = 'Reset Selected Texture'
+    bl_label = bpy.app.translations.pgettext('Reset Item')
+    bl_description = bpy.app.translations.pgettext('Reset Selected Texture')
     bl_options = {'UNDO', 'INTERNAL'}
 
     list_id = IntProperty(default=0)
@@ -73,8 +73,8 @@ class MultiCombineImageReset(bpy.types.Operator):
 
 class MultiCombineColor(bpy.types.Operator):
     bl_idname = 'smc.img_color'
-    bl_label = 'Diffuse Item'
-    bl_description = 'Texture as Color'
+    bl_label = bpy.app.translations.pgettext('Diffuse Item')
+    bl_description = bpy.app.translations.pgettext('Texture as Color')
     bl_options = {'UNDO', 'INTERNAL'}
 
     list_id = IntProperty(default=0)
@@ -91,13 +91,13 @@ class MultiCombineColor(bpy.types.Operator):
 
 class MultiCombineImagePath(bpy.types.Operator):
     bl_idname = 'smc.img_path'
-    bl_label = 'Path Item'
-    bl_description = 'Select an Image'
+    bl_label = bpy.app.translations.pgettext('Path Item')
+    bl_description = bpy.app.translations.pgettext('Select an Image')
     bl_options = {'UNDO', 'INTERNAL'}
 
     list_id = IntProperty(default=0)
-    filepath = StringProperty(name='Select an Image', maxlen=1024, options={'HIDDEN'})
-    filename = StringProperty(name='Image Name', default='', options={'HIDDEN'})
+    filepath = StringProperty(name=bpy.app.translations.pgettext('Select an Image'), maxlen=1024, options={'HIDDEN'})
+    filename = StringProperty(name=bpy.app.translations.pgettext('Image Name'), default='', options={'HIDDEN'})
     directory = StringProperty(maxlen=1024, default='', subtype='FILE_PATH', options={'HIDDEN'})
     filter_glob = StringProperty(
         default='*.BMP;*.GIF;*.JPEG;*.JPG;*.PNG;*.TIFF;*.TIF;*.DDS;*.PSD;*.TGA',

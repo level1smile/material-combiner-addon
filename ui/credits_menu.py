@@ -6,7 +6,7 @@ from .. import globs
 
 
 class CreditsMenu(bpy.types.Panel):
-    bl_label = 'Credits'
+    bl_label = bpy.app.translations.pgettext('Credits')
     bl_idname = 'SMC_PT_Credits_Menu'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI' if globs.is_blender_2_80_or_newer else 'TOOLS'
@@ -26,15 +26,23 @@ class CreditsMenu(bpy.types.Panel):
         row = box.row(align=True)
         row.scale_y = 1.2
         row.alignment = 'LEFT'
-        row.label(text='Created by:')
+        row.label(text=bpy.app.translations.pgettext('Created by:'))
         row.label(text='shotariya', icon_value=get_icon_id('shot'))
+        row = box.row(align=True)
+        row.scale_y = 1.2
+        row.alignment = 'LEFT'
+        row.label(text='汉化：')
+        row.label(text='DeepSeek R1')
         col = box.column(align=True)
         col.scale_y = 1.2
-        col.label(text='If you have found a bug:')
-        col.operator('smc.browser', text='Contact me on Discord (@shotariya)',
+        col.label(text=bpy.app.translations.pgettext('If you have found a bug:'))
+        col.operator('smc.browser', text=bpy.app.translations.pgettext('Contact me on Discord (@shotariya)'),
                      icon_value=get_icon_id('discord')).link = discord
-        col.operator('smc.browser', text='Report a Bug on GitHub', icon_value=get_icon_id('github')).link = github
+        col.operator('smc.browser', text=bpy.app.translations.pgettext('Report a Bug on GitHub'),
+                     icon_value=get_icon_id('github')).link = github
         col.separator()
-        col.label(text='If this saved you time:')
-        col.operator('smc.browser', text='Support Material Combiner', icon_value=get_icon_id('patreon')).link = patreon
-        col.operator('smc.browser', text='Buy Me a Coffee', icon_value=get_icon_id('bmc')).link = buymeacoffee
+        col.label(text=bpy.app.translations.pgettext('If this saved you time:'))
+        col.operator('smc.browser', text=bpy.app.translations.pgettext('Support Material Combiner'),
+                     icon_value=get_icon_id('patreon')).link = patreon
+        col.operator('smc.browser', text=bpy.app.translations.pgettext('Buy Me a Coffee'),
+                     icon_value=get_icon_id('bmc')).link = buymeacoffee

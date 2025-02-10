@@ -6,7 +6,7 @@ from ..type_annotations import Scene
 
 
 class MaterialMenu(bpy.types.Panel):
-    bl_label = 'Main Menu'
+    bl_label = bpy.app.translations.pgettext('Main Menu')
     bl_idname = 'SMC_PT_Main_Menu'
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI' if globs.is_blender_2_80_or_newer else 'TOOLS'
@@ -27,16 +27,16 @@ class MaterialMenu(bpy.types.Panel):
 
     @staticmethod
     def _materials_list(col: bpy.types.UILayout, scn: Scene, layout: bpy.types.UIList) -> None:
-        col.label(text='Materials to combine:')
+        col.label(text=bpy.app.translations.pgettext('Materials to combine:'))
         col.template_list('SMC_UL_Combine_List', 'combine_list', scn, 'smc_ob_data',
                           scn, 'smc_ob_data_id', rows=12, type='DEFAULT')
         col = col.column(align=True)
         col.scale_y = 1.2
         col.operator('smc.refresh_ob_data',
-                     text='Update Material List' if scn.smc_ob_data else 'Generate Material List',
+                     text=bpy.app.translations.pgettext('Update Material List') if scn.smc_ob_data else bpy.app.translations.pgettext('Generate Material List'),
                      icon_value=get_icon_id('null'))
         col = layout.column()
-        col.label(text='Properties:')
+        col.label(text=bpy.app.translations.pgettext('Properties:'))
         box = col.box()
         box.scale_y = 1.2
         box.prop(scn, 'smc_size')
@@ -50,7 +50,7 @@ class MaterialMenu(bpy.types.Panel):
         row = box.row()
         col = row.column()
         col.scale_y = 1.2
-        col.label(text='Size of materials without image')
+        col.label(text=bpy.app.translations.pgettext('Size of materials without image'))
         col = row.column()
         col.scale_x = .75
         col.scale_y = 1.2
@@ -59,7 +59,7 @@ class MaterialMenu(bpy.types.Panel):
         row = box.row()
         col = row.column()
         col.scale_y = 1.2
-        col.label(text='Size of gaps between images')
+        col.label(text=bpy.app.translations.pgettext('Size of gaps between images'))
         col = row.column()
         col.scale_x = .75
         col.scale_y = 1.2
@@ -67,23 +67,27 @@ class MaterialMenu(bpy.types.Panel):
         col.prop(scn, 'smc_gaps', text='')
         col = layout.column()
         col.scale_y = 1.5
-        col.operator('smc.combiner', text='Save Atlas to..', icon_value=get_icon_id('null')).cats = False
+        col.operator('smc.combiner', text=bpy.app.translations.pgettext('Save Atlas to..'), icon_value=get_icon_id('null')).cats = False
 
     @staticmethod
     def pillow_installator(col: bpy.types.UILayout) -> None:
         discord = 'https://discordapp.com/users/275608234595713024'
 
-        col.label(text='Python Imaging Library required to continue')
+        col.label(text=bpy.app.translations.pgettext('Python Imaging Library required to continue'))
         col.separator()
         row = col.row()
         row.scale_y = 1.5
-        row.operator('smc.get_pillow', text='Install Pillow', icon_value=get_icon_id('download'))
+        row.operator('smc.get_pillow', text=bpy.app.translations.pgettext('Install Pillow'), icon_value=get_icon_id('download'))
         col.separator()
         col.separator()
         col = col.box().column()
-        col.label(text='If the installation process is repeated'
-                       '\ntry to run Blender as Administrator'
-                       '\nor check your Internet Connection.')
+        col.label(text=bpy.app.translations.pgettext(
+            'If the installation process is repeated\n'
+            'try to run Blender as Administrator\n'
+            'or check your Internet Connection.'
+        ))
         col.separator()
-        col.label(text='If the error persists, contact me on Discord for a manual installation:')
+        col.label(text=bpy.app.translations.pgettext(
+            'If the error persists, contact me on Discord for a manual installation:'
+        ))
         col.operator('smc.browser', text='shotariya#4269', icon_value=get_icon_id('help')).link = discord

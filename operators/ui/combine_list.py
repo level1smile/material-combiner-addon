@@ -14,8 +14,8 @@ from ...utils.materials import get_materials
 
 class RefreshObData(bpy.types.Operator):
     bl_idname = 'smc.refresh_ob_data'
-    bl_label = 'Combine List'
-    bl_description = 'Updates the material list'
+    bl_label = bpy.app.translations.pgettext('Combine List')
+    bl_description = bpy.app.translations.pgettext('Updates the material list')
 
     @staticmethod
     def execute(self, context: bpy.types.Context) -> Set[str]:
@@ -25,6 +25,8 @@ class RefreshObData(bpy.types.Operator):
         combine_list_data = self._cache_previous_values(scn)
         self._rebuild_items_list(scn, ob_list, combine_list_data)
         return {'FINISHED'}
+
+    # ... 其他代码保持不变 ...
 
     @staticmethod
     def _cache_previous_values(scn: Scene) -> CombineListData:
@@ -90,8 +92,8 @@ class RefreshObData(bpy.types.Operator):
 
 class CombineSwitch(bpy.types.Operator):
     bl_idname = 'smc.combine_switch'
-    bl_label = 'Add Item'
-    bl_description = 'Selected materials will be combined into one texture atlas'
+    bl_label = bpy.app.translations.pgettext('Add Item')
+    bl_description = bpy.app.translations.pgettext('Selected materials will be combined into one texture atlas')
 
     list_id = IntProperty(default=0)
 
@@ -104,6 +106,8 @@ class CombineSwitch(bpy.types.Operator):
         elif item.type == globs.CL_MATERIAL:
             self._switch_mat_state(data, item)
         return {'FINISHED'}
+
+    # ... 其他代码保持不变 ...
 
     @staticmethod
     def _switch_ob_state(data: List[bpy.types.PropertyGroup], item: bpy.types.PropertyGroup) -> None:

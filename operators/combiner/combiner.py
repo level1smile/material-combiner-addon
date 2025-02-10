@@ -8,8 +8,8 @@ from ... import globs
 
 class Combiner(bpy.types.Operator):
     bl_idname = 'smc.combiner'
-    bl_label = 'Create Atlas'
-    bl_description = 'Combine materials'
+    bl_label = bpy.app.translations.pgettext('Create Atlas')
+    bl_description = bpy.app.translations.pgettext('Combine materials')
     bl_options = {'UNDO', 'INTERNAL'}
 
     directory = StringProperty(maxlen=1024, default='', subtype='FILE_PATH', options={'HIDDEN'})
@@ -30,7 +30,7 @@ class Combiner(bpy.types.Operator):
         atlas_size = calculate_adjusted_size(scn, size)
 
         if max(atlas_size, default=0) > 20000:
-            self.report({'ERROR'}, 'The output image size of {0}x{1}px is too large'.format(*atlas_size))
+            self.report({'ERROR'}, bpy.app.translations.pgettext('The output image size of {0}x{1}px is too large').format(*atlas_size))
             return {'FINISHED'}
 
         atlas = get_atlas(scn, self.structure, atlas_size)
@@ -39,7 +39,7 @@ class Combiner(bpy.types.Operator):
         assign_comb_mats(scn, self.data, comb_mats)
         clear_mats(scn, self.mats_uv)
         bpy.ops.smc.refresh_ob_data()
-        self.report({'INFO'}, 'Materials were combined')
+        self.report({'INFO'}, bpy.app.translations.pgettext('Materials were combined'))
         return {'FINISHED'}
 
     def invoke(self, context: bpy.types.Context, event: bpy.types.Event) -> Set[str]:
@@ -62,9 +62,9 @@ class Combiner(bpy.types.Operator):
 
         if len(self.structure) == 1 and next(iter(self.structure.values()))['dup']:
             clear_duplicates(scn, self.structure)
-            return self._return_with_message('INFO', 'Duplicates were combined')
+            return self._return_with_message('INFO', bpy.app.translations.pgettext('Duplicates were combined'))
         elif not self.structure or len(self.structure) == 1:
-            return self._return_with_message('ERROR', 'No unique materials selected')
+            return self._return_with_message('ERROR', bpy.app.translations.pgettext('No unique materials selected'))
         if event is not None:
             context.window_manager.fileselect_add(self)
 

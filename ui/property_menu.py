@@ -12,9 +12,9 @@ from ..utils.textures import get_texture
 
 
 class PropertyMenu(bpy.types.Operator):
-    bl_label = 'Settings for material:'
+    bl_label = bpy.app.translations.pgettext('Settings for material:')
     bl_idname = 'smc.property_menu'
-    bl_description = 'Show settings for this material'
+    bl_description = bpy.app.translations.pgettext('Show settings for this material')
     bl_options = {'UNDO', 'INTERNAL'}
 
     list_id = IntProperty(default=0)
@@ -52,7 +52,7 @@ class PropertyMenu(bpy.types.Operator):
             self._show_diffuse_color(col, item, image)
             self._show_size_settings(col, item)
         else:
-            col.label(text='Image size: {0}x{0}px'.format(scn.smc_diffuse_size))
+            col.label(text=bpy.app.translations.pgettext('Image size: {0}x{0}px').format(scn.smc_diffuse_size))
             self._show_diffuse_color(col, item)
 
     @staticmethod
@@ -63,7 +63,7 @@ class PropertyMenu(bpy.types.Operator):
         image_name = '{0}...'.format(image.name[:16]) if len(image.name) > 16 else image.name
         row.label(text=image_name, icon_value=image.preview.icon_id)
         row.alignment = 'RIGHT'
-        row.label(text='Size: {0}x{1}px'.format(*image.size))
+        row.label(text=bpy.app.translations.pgettext('Size: {0}x{1}px').format(*image.size))
 
     @staticmethod
     def _show_diffuse_color(col: bpy.types.UILayout, item: bpy.types.PropertyGroup,
@@ -76,7 +76,7 @@ class PropertyMenu(bpy.types.Operator):
             split = col.row().split(factor=0.1) if globs.is_blender_2_80_or_newer else col.row().split(
                 percentage=0.1)
             split.separator()
-            split.prop(item.mat, 'diffuse_color', text='')
+            split.prop(item.mat, 'diffuse_color', text=bpy.app.translations.pgettext('Diffuse Color'))
             return
 
         shader = get_shader_type(item.mat)
@@ -96,22 +96,22 @@ class PropertyMenu(bpy.types.Operator):
         split.separator()
 
         if shader in ['mmd', 'mmdCol']:
-            split.prop(item.mat.node_tree.nodes['mmd_shader'].inputs['Diffuse Color'], 'default_value', text='')
+            split.prop(item.mat.node_tree.nodes['mmd_shader'].inputs['Diffuse Color'], 'default_value', text=bpy.app.translations.pgettext('Diffuse Color'))
         if shader in ['mtoon', 'mtoonCol']:
-            split.prop(item.mat.node_tree.nodes['Mtoon1PbrMetallicRoughness.BaseColorFactor'], 'color', text='')
+            split.prop(item.mat.node_tree.nodes['Mtoon1PbrMetallicRoughness.BaseColorFactor'], 'color', text=bpy.app.translations.pgettext('Base Color'))
         elif shader in ['vrm', 'vrmCol']:
-            split.prop(item.mat.node_tree.nodes['RGB'].outputs[0], 'default_value', text='')
+            split.prop(item.mat.node_tree.nodes['RGB'].outputs[0], 'default_value', text=bpy.app.translations.pgettext('Base Color'))
         elif shader == 'xnalaraNewCol':
-            split.prop(item.mat.node_tree.nodes['Group'].inputs['Diffuse'], 'default_value', text='')
+            split.prop(item.mat.node_tree.nodes['Group'].inputs['Diffuse'], 'default_value', text=bpy.app.translations.pgettext('Diffuse Color'))
         elif shader in ['principledCol', 'xnalaraCol']:
-            split.prop(item.mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'], 'default_value', text='')
+            split.prop(item.mat.node_tree.nodes['Principled BSDF'].inputs['Base Color'], 'default_value', text=bpy.app.translations.pgettext('Base Color'))
 
     @staticmethod
     def _show_size_settings(col: bpy.types.UILayout, item: bpy.types.PropertyGroup):
-        col.prop(item.mat, 'smc_size')
+        col.prop(item.mat, 'smc_size', text=bpy.app.translations.pgettext('Custom image size'))
         if item.mat.smc_size:
             split = col.row().split(factor=0.1) if globs.is_blender_2_80_or_newer else col.row().split(percentage=0.1)
             split.separator()
             col = split.column()
-            col.prop(item.mat, 'smc_size_width')
-            col.prop(item.mat, 'smc_size_height')
+            col.prop(item.mat, 'smc_size_width', text=bpy.app.translations.pgettext('Max width (px)'))
+            col.prop(item.mat, 'smc_size_height', text=bpy.app.translations.pgettext('Max height (px)'))

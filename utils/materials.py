@@ -41,12 +41,30 @@ shader_image_nodes = {
 
 
 def get_materials(ob: bpy.types.Object) -> List[bpy.types.Material]:
+    """
+    获取对象的材质列表。
+
+    参数:
+        ob (bpy.types.Object): 输入的对象。
+
+    返回:
+        List[bpy.types.Material]: 对象的材质列表。
+    """
     return [mat_slot.material for mat_slot in ob.material_slots if mat_slot.material]
 
 
 def get_shader_type(mat: bpy.types.Material) -> Union[str, None]:
+    """
+    获取材质的着色器类型。
+
+    参数:
+        mat (bpy.types.Material): 输入的材质。
+
+    返回:
+        Union[str, None]: 材质的着色器类型，如果材质无效则返回 None。
+    """
     if not mat.node_tree or not mat.node_tree.nodes:
-        return
+        return None
 
     node_tree = mat.node_tree.nodes
 
@@ -71,6 +89,15 @@ def get_shader_type(mat: bpy.types.Material) -> Union[str, None]:
 
 
 def sort_materials(mat_list: List[bpy.types.Material]) -> ValuesView[MatDictItem]:
+    """
+    根据材质的纹理和漫反射颜色对材质进行排序。
+
+    参数:
+        mat_list (List[bpy.types.Material]): 输入的材质列表。
+
+    返回:
+        ValuesView[MatDictItem]: 排序后的材质字典的值视图。
+    """
     for mat in bpy.data.materials:
         mat.root_mat = None
 
@@ -97,6 +124,15 @@ def sort_materials(mat_list: List[bpy.types.Material]) -> ValuesView[MatDictItem
 
 
 def rgb_to_255_scale(diffuse: Diffuse) -> Diffuse:
+    """
+    将 RGB 颜色值转换为 0-255 范围。
+
+    参数:
+        diffuse (Diffuse): 输入的 RGB 颜色值。
+
+    返回:
+        Diffuse: 转换后的 RGB 颜色值。
+    """
     rgb = np.empty(shape=(0,), dtype=int)
     for c in diffuse:
         if c < 0.0:
@@ -110,6 +146,15 @@ def rgb_to_255_scale(diffuse: Diffuse) -> Diffuse:
 
 
 def get_diffuse(mat: bpy.types.Material) -> Diffuse:
+    """
+    获取材质的漫反射颜色。
+
+    参数:
+        mat (bpy.types.Material): 输入的材质。
+
+    返回:
+        Diffuse: 材质的漫反射颜色。
+    """
     if globs.is_blender_2_79_or_older:
         return rgb_to_255_scale(mat.diffuse_color)
 

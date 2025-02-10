@@ -6,18 +6,20 @@ from . import addon_updater_ops
 
 class CombineList(bpy.types.PropertyGroup):
     ob = PointerProperty(
-        name='Current Object',
+        name=bpy.app.translations.pgettext("Current Object"),
         type=bpy.types.Object,
     )
     ob_id = IntProperty(default=0)
     mat = PointerProperty(
-        name='Current Object Material',
+        name=bpy.app.translations.pgettext("Current Object Material"),
         type=bpy.types.Material,
     )
     layer = IntProperty(
-        name='Material Layers',
-        description='Materials with the same number will be merged together.'
-                    '\nUse this to create multiple materials linked to the same atlas file',
+        name=bpy.app.translations.pgettext("Material Layers"),
+        description=bpy.app.translations.pgettext(
+            "Materials with the same number will be merged together.\n"
+            "Use this to create multiple materials linked to the same atlas file"
+        ),
         min=1,
         max=99,
         step=1,

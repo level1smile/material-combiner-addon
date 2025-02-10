@@ -427,14 +427,12 @@ def _add_ids_from_existing_files(scn: Scene, existed_ids: Set[int]) -> None:
 
 
 def _save_atlas(scn: Scene, atlas: ImageType, unique_id: str) -> str:
-    # 确保路径支持中文
     path = os.path.join(scn.smc_save_path, '{0}{1}.png'.format(atlas_prefix, unique_id))
     atlas.save(path)
     return path
 
 
 def _create_texture(path: str, unique_id: str) -> bpy.types.Texture:
-    # 确保路径支持中文
     texture = bpy.data.textures.new('{0}{1}'.format(atlas_texture_prefix, unique_id), 'IMAGE')
     image = bpy.data.images.load(path)
     texture.image = image
@@ -442,7 +440,6 @@ def _create_texture(path: str, unique_id: str) -> bpy.types.Texture:
 
 
 def _create_material(texture: bpy.types.Texture, unique_id: str, idx: int) -> bpy.types.Material:
-    # 确保材质名称支持中文
     mat = bpy.data.materials.new(name='{0}{1}_{2}'.format(atlas_material_prefix, unique_id, idx))
     if globs.is_blender_2_80_or_newer:
         _configure_material(mat, texture)

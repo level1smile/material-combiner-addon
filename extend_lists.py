@@ -26,7 +26,7 @@ class SMC_UL_Combine_List(bpy.types.UIList):
         row = row.row()
         row.alignment = 'RIGHT'
         row.operator('smc.combine_switch',
-                     text='Deselect All' if item.used else 'Select All',
+                     text=bpy.app.translations.pgettext('Deselect All') if item.used else bpy.app.translations.pgettext('Select All'),
                      emboss=False).list_id = index
 
     @staticmethod
